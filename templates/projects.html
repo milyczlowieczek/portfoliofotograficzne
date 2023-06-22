@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Projects</h1>
+
+    <div class="tag-filter">
+        <form>
+            <label for="tag-select">Filter by Tag:</label>
+            <select id="tag-select" name="tag">
+                <option value="all">All</option>
+                <option value="portraits">Portraits</option>
+                <option value="events">Events</option>
+                <option value="concerts">Concerts</option>
+                {% for tag in tags %}
+                    <option value="{{ tag }}">{{ tag }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Apply</button>
+        </form>
+    </div>
+
+    <div class="photo-container">
+        {% for project in projects %}
+            {% set cover_photo = project['src'][0] %}
+            {% set remaining_photos = project['src'][1:] %}
+
+            {% if project['visible'] == "🔓" %}
+                <a href="{{ url_for('photo_detail', project_id=project['id']) }}">
+                    <div class="photo">
+                        <img src="{{ cover_photo }}" alt="{{ project['title'] }}">
+                        <div class="title-overlay">{{ project['title'] }} - {{ project['visible'] }}</div>
+                    </div>
+                </a>
+            {% elif project['visible'] == "🔒" %}
+                <a href="{{ url_for('code_route', project_id=project['id']) }}">
+                    <div class="photo">
+                        <img src="{{ cover_photo }}" alt="{{ project['title'] }}">
+                        <div class="title-overlay">{{ project['title'] }} - {{ project['visible'] }}</div>
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock content %}

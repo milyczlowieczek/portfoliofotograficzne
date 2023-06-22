@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="photo-container">
+        {% if project['ready'] %}
+            {% for src in project['src'] %}
+                <label for="modal-{{ loop.index }}" class="photo">
+                <img src="{{ src }}" alt="{{ project['title'] }}">
+            </label>
+            <input type="checkbox" id="modal-{{ loop.index }}" class="modal-toggle">
+            <div class="modal">
+                <label for="modal-{{ loop.index }}" class="close">&times;</label>
+                <img src="{{ src }}" alt="{{ project['title'] }}" class="modal-image">
+            </div>
+            {% endfor %}
+        {% else %}
+            {% for src in project['src'] %}
+            <label for="modal-{{ loop.index }}" class="photo">
+                <img src="{{ src }}" alt="{{ project['title'] }}" oncontextmenu="return false;">
+            </label>
+            <input type="checkbox" id="modal-{{ loop.index }}" class="modal-toggle">
+            <div class="modal">
+                <label for="modal-{{ loop.index }}" class="close">&times;</label>
+                <img src="{{ src }}" alt="{{ project['title'] }}" class="modal-image" oncontextmenu="return false;">
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock content %}

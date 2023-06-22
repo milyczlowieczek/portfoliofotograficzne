@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    {% if photographer_logged_in %}
+        <h1>Projects by Clients</h1>
+
+        {% if projects_by_client %}
+            {% for client_username, client_projects in projects_by_client.items() %}
+                <div class="client-container">
+                    <h2>{{ client_username }}</h2>
+                    {% for project in client_projects %}
+                        <div class="project">
+                            <b>Model:</b> {{ project.model }}<br>
+                            <b>Date:</b> {{ project.date }}<br>
+                            <b>Title:</b> {{ project.title }}<br>
+                            <b>Actions:</b>
+                            <a href="{{ url_for('photo_detail', project_id=project.id) }}">View</a> |
+                            <a href="{{ url_for('edit_project', project_id=project.id) }}">Edit</a>|
+                            <a href="#">Delete</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No projects found.</p>
+        {% endif %}
+
+    {% else %}
+        <p>Please log in to access the photographer dashboard.</p>
+    {% endif %}
+{% endblock %}

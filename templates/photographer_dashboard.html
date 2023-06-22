@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    {% if photographer_logged_in %}
+        <div class="dashboard">
+        <h1 class="dashboard-title">Welcome to the Dashboard</h1>
+
+        <h3>Add Project</h3>
+        <a href="{{ url_for('add_project') }}">Add a new project</a>
+
+        <h3>Projects</h3>
+        <a href="{{ url_for('projects_by_clients') }}">View Projects</a>
+
+
+        </div>
+
+    {% else %}
+        <p>Please log in to access the photographer dashboard.</p>
+    {% endif %}
+{% endblock %}

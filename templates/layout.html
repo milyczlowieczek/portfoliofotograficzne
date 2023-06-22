@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/6/68/Video_camera_icon.svg">
+    {% if title %}
+        <title>Kat Midura - {{ title }}</title>
+    {% else %}
+        <title>Kat Midura</title>
+    {% endif %}
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h2>Kat Midura</h2>
+        </div>
+        <ul class="menu">
+            <li class="menu-item"><a class="menu-link" href="{{ url_for('home') }}">Home</a></li>
+            <li class="menu-item"><a class="menu-link" href="{{ url_for('projects_page') }}">Projects</a></li>
+            <li class="menu-item"><a class="menu-link" href="{{ url_for('about') }}">About</a></li>
+            <li class="menu-item"><a class="menu-link" href="{{ url_for('contact') }}">Contact</a></li>
+            {% if photographer_logged_in %}
+                    <li class="menu-item"><a class="menu-link" href="{{ url_for('photographer_dashboard') }}">Dashboard</a></li>
+                    <li class="menu-item"><a class="menu-link" href="{{ url_for('logout') }}">Logout</a></li>
+            {% elif client_logged_in %}
+                    <li class="menu-item"><a class="menu-link" href="{{ url_for('client_dashboard') }}">Dashboard</a></li>
+                    <li class="menu-item"><a class="menu-link" href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li class="menu-item"><a class="menu-link" href="{{ url_for('login') }}">Login</a></li>
+            {% endif %}
+        </ul>
+    </header>
+    {% block content %}{% endblock %}
+
+</body>
+</html>

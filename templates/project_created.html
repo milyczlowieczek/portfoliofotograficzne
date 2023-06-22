@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Project Created</h1>
+    <p>Your project has been successfully created!</p>
+    <p>Project Details:</p>
+    <ul>
+        <li><b>Title:</b> {{ project.title }}</li>
+        <li><b>Model:</b> {{ project.model }}</li>
+        <li><b>Date:</b> {{ project.date }}</li>
+        <li><b>Visibility:</b> {{ project.visible }}</li>
+        {% if project['visible'] == '🔒' %}
+            <li><b>Code:</b> {{ project.code }}</li>
+        {% endif %}
+    </ul>
+    <p>You can now share the project code with your clients to provide them access to the project.</p>
+    <a href="{{ url_for('photographer_dashboard') }}">Go back to dashboard</a>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+        {% if client_logged_in %}
+        <h1>Welcome to Your Dashboard</h1>
+        {% if ready_projects != [] %}
+        <h3>Ready Projects</h3>
+        {% endif %}
+        {% for ready in ready_projects %}
+            <div class="project-card">
+                <h3>{{ ready.title }}</h3>
+                <p>Model: {{ ready.model }}</p>
+                <p>Date: {{ ready.date }}</p>
+                <p>Visibility: {{ ready.visible }}</p>
+                <p>Status: {{ ready.status }}</p>
+                <a href="{{ url_for('photo_detail', project_id=ready.id) }}">View Details</a>
+            </div>
+        {% endfor %}
+        {% if pending_projects != [] %}
+        <h3>Pending Projects</h3>
+        {% endif %}
+            {% for pending in pending_projects %}
+            <div class="project-card">
+                <h3>{{ pending.title }}</h3>
+                <p>Model: {{ pending.model }}</p>
+                <p>Date: {{ pending.date }}</p>
+                <p>Visibility: {{ pending.visible }}</p>
+                <p>Status: {{ pending.status }}</p>
+                <a href="{{ url_for('photo_detail', project_id=pending.id) }}">View Details</a>
+            </div>
+        {% endfor %}
+        {% endif %}
+{% endblock %}

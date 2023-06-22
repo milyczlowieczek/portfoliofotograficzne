@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Code Access</h1>
+    {% if error %}
+        <p class="error">Incorrect code. Please try again.</p>
+    {% endif %}
+    <form method="POST" action="{{ url_for('code_route', project_id=project['id']) }}">
+        <label for="code">Enter the code:</label>
+        <input type="text" id="code" name="code" required>
+        <button type="submit">Submit</button>
+    </form>
+{% endblock content %}

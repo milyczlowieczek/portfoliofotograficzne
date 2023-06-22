@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    {% if photographer_logged_in %}
+    <h1>Edit Project</h1>
+    <form method="POST" action="{{ url_for('edit_project', project_id=project_id) }}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="model">Model:</label>
+            <input type="text" id="model" name="model" value="{{ project['model'] }}" required>
+        </div>
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="text" id="date" name="date" value="{{ project['date'] }}" required>
+        </div>
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" value="{{ project['title'] }}" required>
+        </div>
+        <div class="form-group">
+            <label for="add_images">Add Images:</label>
+            <input type="file" id="add_images" name="add_images" accept="image/*" multiple>
+        </div>
+        <div class="form-group">
+            <label for="delete_images">Delete Images:</label>
+            <select id="delete_images" name="delete_images" multiple>
+                {% for image in project['src'] %}
+                    <option value="{{ image }}">{{ image }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="visible">Visibility:</label>
+            <select id="visible" name="visible" required>
+                <option value="🔒" {% if project['visible'] == '🔒' %}selected{% endif %}>🔒 Locked</option>
+                <option value="🔓" {% if project['visible'] == '🔓' %}selected{% endif %}>🔓 Unlocked</option>
+            </select></div>
+        <div class="form-group">
+        <label for="status">Status:</label>
+        <select id="status" name="status" required>
+            <option value="to_choose" {% if project['status'] == 'to_choose' %}selected{% endif %}>To Choose</option>
+            <option value="pending" {% if project['status'] == 'pending' %}selected{% endif %}>Pending</option>
+            <option value="edited" {% if project['status'] == 'edited' %}selected{% endif %}>Edited</option>
+        </select>
+        </div>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <button type="submit">Update Project</button>
+    </form>
+    <form method="POST" action="{{ url_for('edit_project', project_id=project_id) }}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="add_existing_images">Add Existing Images:</label>
+            <select id="add_existing_images" name="add_existing_images" multiple>
+                {% for image in existing_images %}
+                    <option value="{{ image }}">{{ image }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% for image in project['src'] %}
+            <div class="existing-photo">
+                <img src="{{ image }}" alt="Existing Photo">
+                <input type="checkbox" name="delete_photo" value="{{ image }}"> Delete
+            </div>
+        {% endfor %}
+        <button type="submit">Update Project with Existing Images</button>
+    </form>
+    <a href="{{ url_for('photographer_dashboard') }}">Go back to Dashboard</a>
+    {% endif %}
+{% endblock %}
